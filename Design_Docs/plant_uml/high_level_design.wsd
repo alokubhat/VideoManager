@@ -1,0 +1,29 @@
+@startuml high_level_design
+
+package "Video_Manager_Client" {
+    component [Video_Manager_UI]
+    component [Video_Manager_BL]
+    component [DatabaseOpsAdapter]
+    component [VersioningHelper]
+    component [VideoStorage]
+    component [FileSystemOpsAdapter]
+}
+
+component [DatabaseOps]
+component [FileSystemOps]
+database DB
+folder Video_Storage
+
+user -> [Video_Manager_UI]
+[Video_Manager_UI] -right-> [Video_Manager_BL]
+[Video_Manager_BL] -down-> [VersioningHelper]
+[Video_Manager_BL] -down-> [VideoStorage]
+[VersioningHelper] -down-> [DatabaseOpsAdapter]
+[VideoStorage] -down-> [DatabaseOpsAdapter]
+[VideoStorage] -down-> [FileSystemOpsAdapter]
+[DatabaseOpsAdapter] -down-> [DatabaseOps]
+[FileSystemOpsAdapter] -down-> [FileSystemOps]
+[DatabaseOps] -down-> DB
+[FileSystemOps] -down-> Video_Storage
+
+@enduml

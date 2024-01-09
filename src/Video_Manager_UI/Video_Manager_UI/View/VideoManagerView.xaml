@@ -1,0 +1,19 @@
+﻿<Window x:Class="Video_Manager_UI.View.VideoManagerView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Video_Manager_UI.View" 
+        xmlns:model="clr-namespace:Video_Manager_UI.Model" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=model:VideoManagerModel}"
+        Title="VideoManagerView" Height="450" Width="800">
+    <Grid Margin="0,0,0,20" Name="VideoManagerGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Content="Update" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="310,40,0,0" Name="btnFetch" VerticalAlignment="Top" Width="141" Command="{Binding FetchCommand}" />
+        <TextBox Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="80,143,0,0" Name="txtContent" VerticalAlignment="Top" Width="178" Text="{Binding Path=Content}"/>
+    </Grid>
+</Window>
