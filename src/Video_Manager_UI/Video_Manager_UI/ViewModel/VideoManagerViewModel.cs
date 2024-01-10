@@ -11,21 +11,21 @@ namespace Video_Manager_UI.ViewModel
     using System.Collections.Generic;
     using Video_Manager_UI.Model;
 
-    class VideoManagerViewModel
+    class VideoManagerViewModel : INotifyPropertyChanged
     {
-        private String? _content;
+        public event PropertyChangedEventHandler PropertyChanged;
         private VideoManagerModel _videoManager;
 
         public VideoManagerViewModel()
         {
-            _content = "App Init!";
             _videoManager = new VideoManagerModel();
+            _videoManager.PropertyChanged += OnPropertyChanged;
         }
 
         public String? Content
         {
-            get { return _content; }
-            set { _content = value; }
+            get { return _videoManager.Content; }
+            set { _videoManager.Content = value; }
         }
 
         private ICommand mFetcher;
@@ -63,6 +63,14 @@ namespace Video_Manager_UI.ViewModel
             public void Execute(object parameter)
             {
                 _videoManager.FetchFiles();
+            }
+        }
+
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e) 
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(e.PropertyName));
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Windows;
+using Video_Manager_UI.Model;
 using Video_Manager_UI.View;
 using Video_Manager_UI.ViewModel;
 

@@ -5,8 +5,11 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.IO;
+using DatabaseOpsAdapter.Models;
+using System.Runtime.InteropServices;
 
 namespace DatabaseOpsAdapter
 {
@@ -38,14 +41,18 @@ namespace DatabaseOpsAdapter
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<String> GetVideoDetails()
+        public async Task<ListOfFiles> GetVideoDetails()
         {
+            ListOfFiles output = new ListOfFiles();
             string path = @"api/VidManager/GetFiles";
             HttpResponseMessage response = await client.GetAsync(path).ConfigureAwait(continueOnCapturedContext: false);
             if (response.IsSuccessStatusCode) { 
-                return response.Content.ReadAsStringAsync().Result;
+                var jsonResponseContent = response.Content.ReadAsStringAsync();
+                var jsonResponseContentString = jsonResponseContent.Result;
+                output = JsonSerializer.Deserialize<ListOfFiles>(jsonResponseContentString);
+                return output;
             }
-            return response.ToString();
+            return output;
         }
 
         //static async Task<String> GetProductAsync(string path)

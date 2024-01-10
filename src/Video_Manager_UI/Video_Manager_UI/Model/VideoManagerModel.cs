@@ -8,11 +8,12 @@ using DatabaseOpsAdapter;
 namespace Video_Manager_UI.Model
 {
     using System.ComponentModel;
+    using System.Windows.Input;
 
     public class VideoManagerModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private String? content;
+        private String? content = "Init string";
         public String? Content {
             get 
             {
@@ -21,8 +22,14 @@ namespace Video_Manager_UI.Model
             set
             {
                 this.content = value;
-                OnPropertyChanged("Content");
+                OnPropertyChanged(nameof(Content));
             }
+        }
+
+        private DatabaseOpsAdapter.DatabaseOpsAdapter databaseOpsAdapter;
+        public VideoManagerModel()
+        {
+            databaseOpsAdapter = new DatabaseOpsAdapter.DatabaseOpsAdapter();
         }
 
         private void OnPropertyChanged(string propertyName)
@@ -34,9 +41,8 @@ namespace Video_Manager_UI.Model
         }
 
         public void FetchFiles() {
-            DatabaseOpsAdapter.DatabaseOpsAdapter databaseOpsAdapter = new DatabaseOpsAdapter.DatabaseOpsAdapter();
             var content = databaseOpsAdapter.GetVideoDetails().Result;
-            Content = content;
+            Content = content.ToString();
         }
     }
 }
